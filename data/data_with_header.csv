@@ -1,0 +1,3 @@
+name,int_amount,date,double_amount,health
+jay,123,2017-09-11,23.34,true
+frank,234,1998-08-23,98.03,false
