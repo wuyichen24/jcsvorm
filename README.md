@@ -29,6 +29,22 @@ If your CSV file doesn't have the header line, you can also use the column index
 private String firstName;
 ```
 
+If a column is date in CSV, you can use format parameter to parse or write a column, like
+
+**In Java**
+```java
+@CsvColumn(pos = "DOB", format="yyyy-MM-dd")
+private Date   dob;
+```
+
+**In CSV**
+
+| DOB |
+| - |
+| 1978-02-17 |
+| 1984-11-26 |
+| ...  |
+
 ## Getting Started
 Please see our [Wiki](https://github.com/wuyichen24/jcsvorm/wiki/Getting-Started) page.
 
