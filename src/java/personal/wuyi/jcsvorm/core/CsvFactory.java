@@ -658,7 +658,7 @@ public class CsvFactory {
 			field.set(t, value.charAt(0));
 		} else if (fieldType == Boolean.class || fieldType == Boolean.TYPE) { 
 			field.set(t, Boolean.parseBoolean(value));
-		} else if (fieldType == java.util.Date.class || fieldType == Timestamp.class || fieldType == Calendar.class || fieldType == LocalDate.class || fieldType == LocalDateTime.class) {
+		} else if (fieldType == java.util.Date.class || fieldType == java.sql.Date.class || fieldType == Timestamp.class || fieldType == Calendar.class || fieldType == LocalDate.class || fieldType == LocalDateTime.class) {
 			if (Strings.isNullOrEmpty(column.format())) {
 				throw new IllegalArgumentException("The field " + field.getName() + " needs to spefic the format for parsing date or date time.");
 			}
@@ -725,7 +725,7 @@ public class CsvFactory {
 			return Character.toString((char) value);  
 		} else if (fieldType == Boolean.class || fieldType == Boolean.TYPE) { 
 			return Boolean.toString((boolean) value);
-		} else if (fieldType == java.util.Date.class || fieldType == Timestamp.class || fieldType == Calendar.class || fieldType == LocalDate.class || fieldType == LocalDateTime.class) {
+		} else if (fieldType == java.util.Date.class || fieldType == java.sql.Date.class ||  fieldType == Timestamp.class || fieldType == Calendar.class || fieldType == LocalDate.class || fieldType == LocalDateTime.class) {
 			final CsvColumn column = field.getAnnotation(CsvColumn.class);
 			if (Strings.isNullOrEmpty(column.format())) {
 				throw new IllegalArgumentException("The field " + field.getName() + " needs to spefic the format for writing date or date time.");
