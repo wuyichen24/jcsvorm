@@ -23,6 +23,12 @@ private String firstName;
 | Mary |
 | ...  |
 
+If your CSV file doesn't have the header line, you can also use the column index to map, like
+```java
+@CsvColumn(pos = 0)
+private String firstName;
+```
+
 ## Getting Started
 Please see our [Wiki](https://github.com/wuyichen24/jcsvorm/wiki/Getting-Started) page.
 
