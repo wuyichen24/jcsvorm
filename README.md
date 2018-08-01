@@ -45,6 +45,17 @@ private Date   dob;
 | 1984-11-26 |
 | ...  |
 
+After using @CsvColumn with different parameters, it will make much easier for reading and writing a CSV, just one line function call per each functionality, like:
+
+**Read**
+```java
+List<Student> studentList = CsvFactory.readCsv(Student.class, "data/data_with_header.csv", HeaderOption.WITH_HEADER);
+```
+**Write**
+```java
+CsvFactory.writeCsv(studentList, "data/output.csv", HeaderOption.WITH_HEADER);
+```
+
 ## Getting Started
 Please see our [Wiki](https://github.com/wuyichen24/jcsvorm/wiki/Getting-Started) page.
 
