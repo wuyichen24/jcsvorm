@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/wuyichen24/jcsvorm.svg?branch=master)](https://travis-ci.org/wuyichen24/jcsvorm)
 [![Coverage Status](https://coveralls.io/repos/github/wuyichen24/jcsvorm/badge.svg?branch=master)](https://coveralls.io/github/wuyichen24/jcsvorm?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e867f61a668a490695a6db0245b85600)](https://www.codacy.com/project/wuyichen24/jcsvorm/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wuyichen24/jcsvorm&amp;utm_campaign=Badge_Grade_Dashboard)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0) 
 
 Use annotation and reflection to handle the ORM (Object-Relational Mapping) between Java classes and CSV (Comma-Separated Values) files.
