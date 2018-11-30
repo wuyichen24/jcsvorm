@@ -30,6 +30,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import personal.wuyi.io.file.csv.HeaderOption;
+import personal.wuyi.jcsvorm.core.user.User1;
+import personal.wuyi.jcsvorm.core.user.User2;
+import personal.wuyi.jcsvorm.core.user.User3;
+import personal.wuyi.jcsvorm.core.user.User4;
 
 /**
  * Test class for CsvFactory.
@@ -118,6 +122,9 @@ public class CsvFactoryTest {
 		}
 	}
 	
+	/**
+	 * write csv based on pos
+	 */
 	@Test
 	public void writeCsvTest1() throws IllegalArgumentException, IllegalAccessException, IOException {
 		List<User4> userList = new ArrayList<>();
@@ -145,6 +152,9 @@ public class CsvFactoryTest {
 		}
 	}
 	
+	/**
+	 * write csv with only selected columns
+	 */
 	@Test
 	public void writeCsvTest2() throws IllegalArgumentException, IllegalAccessException, IOException {
 		List<User4> userList = new ArrayList<>();
