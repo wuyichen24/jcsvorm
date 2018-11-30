@@ -125,6 +125,24 @@ public class CsvFactoryTest {
 		userList.add(new User4("Sam", 3000, Calendar.getInstance().getTime(), 40.34, false));
 		userList.add(new User4("Joe", 4000, Calendar.getInstance().getTime(), 33.98, true));
 		CsvFactory.writeCsv(userList, "data/output.csv", HeaderOption.WITH_HEADER);
+		
+		List<String> lineList = Files.readAllLines(Paths.get("data/output.csv"));
+		Assert.assertEquals(lineList.size() - 1, userList.size());   // ignore 1 header line
+		String[] headerLine = lineList.get(0).split(",");
+		Assert.assertEquals("name",         headerLine[0]);
+		Assert.assertEquals("int_amount",   headerLine[1]);
+		Assert.assertEquals("dob",          headerLine[2]);
+		Assert.assertEquals("perf_balance", headerLine[3]);
+		Assert.assertEquals("health",       headerLine[4]);
+		for (int i = 0; i < userList.size(); i++) {
+			User4    user = userList.get(i);
+			String[] line = lineList.get(i+1).split(",");
+			Assert.assertEquals(line[0],                       user.getName());
+			Assert.assertEquals(Integer.parseInt(line[1]),     user.getSalary());
+			Assert.assertEquals(line[2],                       df.format(user.getDob()));
+			Assert.assertEquals(Double.parseDouble(line[3]),   user.getPerformance(), 0.0);
+			Assert.assertEquals(Boolean.parseBoolean(line[4]), user.isHealth());
+		}
 	}
 	
 	@Test
@@ -134,5 +152,16 @@ public class CsvFactoryTest {
 		userList.add(new User4("Sam", 3000, Calendar.getInstance().getTime(), 40.34, false));
 		userList.add(new User4("Joe", 4000, Calendar.getInstance().getTime(), 33.98, true));
 		CsvFactory.writeCsv(userList, "data/output2.csv", Arrays.asList("perf_balance", "int_amount"), HeaderOption.WITH_HEADER);
+		
+		List<String> lineList = Files.readAllLines(Paths.get("data/output2.csv"));
+		String[] headerLine = lineList.get(0).split(",");
+		Assert.assertEquals("perf_balance", headerLine[0]);
+		Assert.assertEquals("int_amount",   headerLine[1]);
+		for (int i = 0; i < userList.size(); i++) {
+			User4    user = userList.get(i);
+			String[] line = lineList.get(i+1).split(",");
+			Assert.assertEquals(Double.parseDouble(line[0]),   user.getPerformance(), 0.0);
+			Assert.assertEquals(Integer.parseInt(line[1]),     user.getSalary());
+		}
 	}
 }
