@@ -21,10 +21,9 @@ import java.util.Date;
 import personal.wuyi.jcsvorm.annotation.CsvColumn;
 import personal.wuyi.jcsvorm.annotation.CsvEntity;
 
-@CsvEntity
-public class UserError1 {
+public class UserError3 {
 	@CsvColumn(name = "name")
-	private static String name;           // name field can not be static
+	private String name;
 	
 	@CsvColumn(name = "int_amount")
 	private int    salary;
@@ -38,9 +37,8 @@ public class UserError1 {
 	@CsvColumn(name = "health")
 	private boolean isHealth;
 
-	
-	public static  String getName()                   { return name;                    }
-	public static  void setName(String name)          { UserError1.name = name;         }
+	public String  getName()                          { return name;                    }
+	public void    setName(String name)               { this.name = name;               }
 	public int     getSalary()                        { return salary;                  }
 	public void    setSalary(int salary)              { this.salary = salary;           }
 	public Date    getDob()                           { return dob;                     }

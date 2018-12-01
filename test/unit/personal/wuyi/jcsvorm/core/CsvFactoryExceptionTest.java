@@ -1,3 +1,19 @@
+/*
+ * Copyright 2018 Wuyi Chen.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package personal.wuyi.jcsvorm.core;
 
 import static org.junit.Assert.fail;
@@ -12,7 +28,18 @@ import org.junit.Test;
 import personal.wuyi.io.file.csv.HeaderOption;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError1;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError2;
+import personal.wuyi.jcsvorm.core.model.wrong.UserError3;
 
+/**
+ * Test class for CsvFactory.
+ * 
+ * <p>This class is to test throwing exceptions in {@code CsvFactory} class.
+ * 
+ * @author  Wuyi Chen
+ * @date    12/01/2017
+ * @version 1.2
+ * @since   1.2
+ */
 public class CsvFactoryExceptionTest {
 	@Test
 	public void transformCsvRecordsExceptionTest() throws IllegalAccessException, IOException, ParseException {
@@ -30,6 +57,14 @@ public class CsvFactoryExceptionTest {
 	        fail("Expected an IllegalArgumentException to be thrown");
 	    } catch (IllegalArgumentException e) {
 	        assertThat(e.getMessage(), is("The column nick_name is required in the CSV file, but it is missing in the CSV file right now."));
+	    }
+		
+		// test class is missing CsvEntity annotation
+		try {
+			CsvFactory.readCsv(UserError3.class, "data/data_with_header.csv", HeaderOption.WITH_HEADER);
+	        fail("Expected an IllegalArgumentException to be thrown");
+	    } catch (IllegalArgumentException e) {
+	        assertThat(e.getMessage(), is("UserError3 needs to have CsvEntity anntation."));
 	    }
 	}
 }
