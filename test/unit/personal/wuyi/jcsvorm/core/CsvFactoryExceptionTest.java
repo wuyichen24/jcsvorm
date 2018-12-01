@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import personal.wuyi.io.file.csv.HeaderOption;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError1;
+import personal.wuyi.jcsvorm.core.model.wrong.UserError2;
 
 public class CsvFactoryExceptionTest {
 	@Test
@@ -21,6 +22,14 @@ public class CsvFactoryExceptionTest {
 	        fail("Expected an IllegalArgumentException to be thrown");
 	    } catch (IllegalArgumentException e) {
 	        assertThat(e.getMessage(), is("name field can not be static."));
+	    }
+		
+		// test field is required, but missing in csv
+		try {
+			CsvFactory.readCsv(UserError2.class, "data/data_with_header.csv", HeaderOption.WITH_HEADER);
+	        fail("Expected an IllegalArgumentException to be thrown");
+	    } catch (IllegalArgumentException e) {
+	        assertThat(e.getMessage(), is("The column nick_name is required in the CSV file, but it is missing in the CSV file right now."));
 	    }
 	}
 }
