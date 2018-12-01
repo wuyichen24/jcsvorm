@@ -30,10 +30,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import personal.wuyi.io.file.csv.HeaderOption;
-import personal.wuyi.jcsvorm.core.user.User1;
-import personal.wuyi.jcsvorm.core.user.User2;
-import personal.wuyi.jcsvorm.core.user.User3;
-import personal.wuyi.jcsvorm.core.user.User4;
+import personal.wuyi.jcsvorm.core.model.correct.User1;
+import personal.wuyi.jcsvorm.core.model.correct.User2;
+import personal.wuyi.jcsvorm.core.model.correct.User3;
+import personal.wuyi.jcsvorm.core.model.correct.User4;
 
 /**
  * Test class for CsvFactory.

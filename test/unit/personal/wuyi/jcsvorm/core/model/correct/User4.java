@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package personal.wuyi.jcsvorm.core.user;
+package personal.wuyi.jcsvorm.core.model.correct;
 
 import java.util.Date;
 

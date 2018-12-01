@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package personal.wuyi.jcsvorm.core.user;
+package personal.wuyi.jcsvorm.core.model.correct;
 
 import java.util.Date;
 
@@ -22,17 +22,17 @@ import personal.wuyi.jcsvorm.annotation.CsvColumn;
 import personal.wuyi.jcsvorm.annotation.CsvEntity;
 
 @CsvEntity
-public class User3 {
+public class User1 {
 	@CsvColumn(name = "name")
 	private String name;
 	
-	@CsvColumn(name = "int_amount", required = true)
+	@CsvColumn(name = "int_amount")
 	private int    salary;
 	
-	@CsvColumn(pos = 2, format="yyyy-MM-dd")
+	@CsvColumn(name = "date", format="yyyy-MM-dd")
 	private Date   dob;
 	
-	@CsvColumn(pos = 3)
+	@CsvColumn(name = "double_amount")
 	private double performance;
 	
 	@CsvColumn(name = "health")
