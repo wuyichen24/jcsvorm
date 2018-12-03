@@ -19,8 +19,10 @@ package personal.wuyi.jcsvorm.core;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -204,6 +206,67 @@ public class CsvFactoryTest {
 			String[] line = lineList.get(i+1).split(",");
 			Assert.assertEquals(Double.parseDouble(line[0]),   user.getPerformance(), 0.0);
 			Assert.assertEquals(Integer.parseInt(line[1]),     user.getSalary());
+		}
+	}
+	
+	/**
+	 * write csv based on pos, test all types
+	 */
+	@Test
+	public void writeCsvTest3() throws IllegalAccessException, IOException {
+		List<AllTypeRecord> recordList = new ArrayList<>();
+		AllTypeRecord record1 = new AllTypeRecord();
+		record1.setStringValue("opqopqopq");
+		record1.setIntegerValue(99);
+		record1.setLongValue(44883377L);
+		record1.setDoubleValue(3.14159);
+		record1.setFloatValue(3.14f);
+		record1.setShortValue((short) 99);
+		record1.setCharValue('x');
+		record1.setBooleanValue(true);
+		record1.setUtilDateValue(Calendar.getInstance().getTime());
+		record1.setTimestampValue(new Timestamp(Calendar.getInstance().getTime().getTime()));
+		record1.setCalendarValue(Calendar.getInstance());
+		record1.setSqlDateValue(new java.sql.Date (Calendar.getInstance().getTime().getTime()));
+		record1.setLocalDateValue(LocalDateTime.now().toLocalDate());
+		record1.setLocalDateTimeValue(LocalDateTime.now());
+		recordList.add(record1);
+		CsvFactory.writeCsv(recordList, "data/all_type_output.csv", HeaderOption.WITH_HEADER);
+		
+		List<String> lineList = Files.readAllLines(Paths.get("data/all_type_output.csv"));
+		Assert.assertEquals(lineList.size() - 1, recordList.size());   // ignore 1 header line
+		String[] headerLine = lineList.get(0).split(",");
+		Assert.assertEquals("string_value",          headerLine[0]);
+		Assert.assertEquals("integer_value",         headerLine[1]);
+		Assert.assertEquals("long_value",            headerLine[2]);
+		Assert.assertEquals("double_value",          headerLine[3]);
+		Assert.assertEquals("float_value",           headerLine[4]);
+		Assert.assertEquals("short_value",           headerLine[5]);
+		Assert.assertEquals("char_value",            headerLine[6]);
+		Assert.assertEquals("boolean_value",         headerLine[7]);
+		Assert.assertEquals("util_date_value",       headerLine[8]);
+		Assert.assertEquals("timestamp_value",       headerLine[9]);
+		Assert.assertEquals("calendar_value",        headerLine[10]);
+		Assert.assertEquals("sql_date_value",        headerLine[11]);
+		Assert.assertEquals("local_date_value",      headerLine[12]);
+		Assert.assertEquals("local_date_time_value", headerLine[13]);
+		for (int i = 0; i < recordList.size(); i++) {
+			AllTypeRecord record = recordList.get(i);
+			String[]      line   = lineList.get(i+1).split(",");
+			Assert.assertEquals(line[0],                       record.getStringValue());
+			Assert.assertEquals(Integer.parseInt(line[1]),     record.getIntegerValue());
+			Assert.assertEquals(Long.parseLong(line[2]),       record.getLongValue());
+			Assert.assertEquals(Double.parseDouble(line[3]),   record.getDoubleValue(), 0.0);
+			Assert.assertEquals(Float.parseFloat(line[4]),     record.getFloatValue(),  0.0);
+			Assert.assertEquals(Short.parseShort(line[5]),     record.getShortValue());
+			Assert.assertEquals(line[6].charAt(0),             record.getCharValue());
+			Assert.assertEquals(Boolean.parseBoolean(line[7]), record.getBooleanValue());
+			Assert.assertEquals(line[8],                       df.format(record.getUtilDateValue()));
+			Assert.assertEquals(line[9],                       df.format(record.getTimestampValue()));
+			Assert.assertEquals(line[10],                      df.format(record.getCalendarValue().getTime()));
+			Assert.assertEquals(line[11],                      df.format(record.getSqlDateValue()));
+			Assert.assertEquals(line[12],                      dtf1.format(record.getLocalDateValue()));
+			Assert.assertEquals(line[13],                      dtf2.format(record.getLocalDateTimeValue()));
 		}
 	}
 }

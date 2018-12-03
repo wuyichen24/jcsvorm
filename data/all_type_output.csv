@@ -1,0 +1,2 @@
+string_value,integer_value,long_value,double_value,float_value,short_value,char_value,boolean_value,util_date_value,timestamp_value,calendar_value,sql_date_value,local_date_value,local_date_time_value
+opqopqopq,99,44883377,3.14159,3.14,99,x,true,2018-12-03,2018-12-03,2018-12-03,2018-12-03,2018-12-03,2018-12-03_15:37
