@@ -26,9 +26,12 @@ import java.text.ParseException;
 import org.junit.Test;
 
 import personal.wuyi.io.file.csv.HeaderOption;
+import personal.wuyi.jcsvorm.core.model.correct.User1;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError1;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError2;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError3;
+import personal.wuyi.jcsvorm.core.model.wrong.UserError4;
+import personal.wuyi.jcsvorm.core.model.wrong.UserError5;
 
 /**
  * Test class for CsvFactory.
@@ -66,5 +69,22 @@ public class CsvFactoryExceptionTest {
 	    } catch (IllegalArgumentException e) {
 	        assertThat(e.getMessage(), is("UserError3 needs to have CsvEntity anntation."));
 	    }
+		
+		// test if csv is without header, the pos parameter is mandatory in CsvColumn annotation
+		try {
+			CsvFactory.readCsv(UserError4.class, "data/data_without_header.csv", HeaderOption.WITHOUT_HEADER);
+			fail("Expected an IllegalArgumentException to be thrown");
+		} catch (IllegalArgumentException e) {
+			assertThat(e.getMessage(), is("For field name, pos parameter is required for the CsvColumn annotation when the CSV file doesn't have header line."));
+		}
+		
+		// test if csv is with header, CsvColumn annotation should have one parameter at least, either name or pos
+		try {
+			CsvFactory.readCsv(UserError5.class, "data/data_with_header.csv", HeaderOption.WITH_HEADER);
+			fail("Expected an IllegalArgumentException to be thrown");
+		} catch (IllegalArgumentException e) {
+			assertThat(e.getMessage(), is("For field name, must specify at least one parameter among pos and name in the CsvColumn annotation when the CSV file has a header line."));
+		}
+		
 	}
 }
