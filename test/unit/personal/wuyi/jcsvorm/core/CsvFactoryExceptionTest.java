@@ -26,7 +26,6 @@ import java.text.ParseException;
 import org.junit.Test;
 
 import personal.wuyi.io.file.csv.HeaderOption;
-import personal.wuyi.jcsvorm.core.model.correct.User1;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError1;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError2;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError3;
