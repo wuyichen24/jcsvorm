@@ -658,7 +658,7 @@ public class CsvFactory {
 			field.set(t, value.charAt(0));
 		} else if (fieldType == Boolean.class || fieldType == Boolean.TYPE) { 
 			field.set(t, Boolean.parseBoolean(value));
-		} else if (fieldType == java.util.Date.class || fieldType == java.sql.Date.class || fieldType == Timestamp.class || fieldType == Calendar.class || fieldType == LocalDate.class || fieldType == LocalDateTime.class) {
+		} else if (fieldType == java.util.Date.class || fieldType == java.sql.Date.class || fieldType == Timestamp.class || fieldType == Calendar.class || fieldType == LocalDate.class) {
 			if (Strings.isNullOrEmpty(column.format())) {
 				throw new IllegalArgumentException("The field " + field.getName() + " needs to spefic the format for parsing date or date time.");
 			}
@@ -675,9 +675,9 @@ public class CsvFactory {
 				field.set(t, new java.sql.Date(date.getTime()));
 			} else if (fieldType == LocalDate.class) {
 				field.set(t, LocalDate.parse(value, DateTimeFormatter.ofPattern(column.format())));
-			} else if (fieldType == LocalDateTime.class) {
-				field.set(t, LocalDateTime.parse(value, DateTimeFormatter.ofPattern(column.format())));
 			}
+		} else if (fieldType == LocalDateTime.class) { 
+			field.set(t, LocalDateTime.parse(value, DateTimeFormatter.ofPattern(column.format())));
 		} else {
 			throw new IllegalArgumentException("The field " + field.getName() + " is not an easy type (" + fieldType.getName() + ") for parsing CSV file");
 		}

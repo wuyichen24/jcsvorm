@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -30,6 +31,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import personal.wuyi.io.file.csv.HeaderOption;
+import personal.wuyi.jcsvorm.core.model.correct.AllTypeRecord;
 import personal.wuyi.jcsvorm.core.model.correct.User1;
 import personal.wuyi.jcsvorm.core.model.correct.User2;
 import personal.wuyi.jcsvorm.core.model.correct.User3;
@@ -44,7 +46,9 @@ import personal.wuyi.jcsvorm.core.model.correct.User4;
  * @since   1.1
  */
 public class CsvFactoryTest {
-	private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	private SimpleDateFormat  df  = new SimpleDateFormat("yyyy-MM-dd");
+	private DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	private DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm");
 	
 	/**
 	 * Use name to map the column, file has header line
@@ -119,6 +123,34 @@ public class CsvFactoryTest {
 			Assert.assertEquals(line[2],                       df.format(user.getDob()));
 			Assert.assertEquals(Double.parseDouble(line[3]),   user.getPerformance(), 0.0);
 			Assert.assertEquals(Boolean.parseBoolean(line[4]), user.isHealth());
+		}
+	}
+	
+	/**
+	 * Use name to map the column, test all types
+	 */
+	@Test
+	public void readCsvTest5() throws IllegalAccessException, IOException, ParseException {
+		List<AllTypeRecord> recordList = CsvFactory.readCsv(AllTypeRecord.class, "data/all_type_input.csv", HeaderOption.WITH_HEADER);
+		List<String> lineList = Files.readAllLines(Paths.get("data/all_type_input.csv"));
+		Assert.assertEquals(lineList.size() - 1, recordList.size());   // ignore 1 header line
+		for (int i = 0; i < recordList.size(); i++) {
+			AllTypeRecord record = recordList.get(i);
+			String[]      line   = lineList.get(i+1).split(",");
+			Assert.assertEquals(line[0],                       record.getStringValue());
+			Assert.assertEquals(Integer.parseInt(line[1]),     record.getIntegerValue());
+			Assert.assertEquals(Long.parseLong(line[2]),       record.getLongValue());
+			Assert.assertEquals(Double.parseDouble(line[3]),   record.getDoubleValue(), 0.0);
+			Assert.assertEquals(Float.parseFloat(line[4]),     record.getFloatValue(),  0.0);
+			Assert.assertEquals(Short.parseShort(line[5]),     record.getShortValue());
+			Assert.assertEquals(line[6].charAt(0),             record.getCharValue());
+			Assert.assertEquals(Boolean.parseBoolean(line[7]), record.getBooleanValue());
+			Assert.assertEquals(line[8],                       df.format(record.getUtilDateValue()));
+			Assert.assertEquals(line[9],                       df.format(record.getTimestampValue()));
+			Assert.assertEquals(line[10],                      df.format(record.getCalendarValue().getTime()));
+			Assert.assertEquals(line[11],                      df.format(record.getSqlDateValue()));
+			Assert.assertEquals(line[12],                      dtf1.format(record.getLocalDateValue()));
+			Assert.assertEquals(line[13],                      dtf2.format(record.getLocalDateTimeValue()));
 		}
 	}
 	

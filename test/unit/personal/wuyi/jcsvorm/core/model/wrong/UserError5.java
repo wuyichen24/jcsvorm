@@ -23,7 +23,7 @@ import personal.wuyi.jcsvorm.annotation.CsvEntity;
 
 @CsvEntity
 public class UserError5 {
-	@CsvColumn
+	@CsvColumn              // no name or pos parameter
 	private String name;
 	
 	@CsvColumn
