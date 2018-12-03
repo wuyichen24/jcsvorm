@@ -529,7 +529,7 @@ public class CsvFactory {
 				return field;
 			}
 		}
-		throw new NoSuchElementException("Can not find a field in the " + clazz.getSimpleName() + " class which the name parameter in the CsvColumn is " + columnName);
+		throw new NoSuchElementException("Can not find a field in the " + clazz.getSimpleName() + " class which the name parameter in the CsvColumn is " + columnName + ".");
 	}
 	
 	/**

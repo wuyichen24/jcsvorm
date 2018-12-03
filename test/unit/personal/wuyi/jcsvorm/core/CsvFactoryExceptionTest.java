@@ -22,15 +22,24 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.junit.Test;
 
 import personal.wuyi.io.file.csv.HeaderOption;
+import personal.wuyi.jcsvorm.core.model.correct.User4;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError1;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError2;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError3;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError4;
 import personal.wuyi.jcsvorm.core.model.wrong.UserError5;
+import personal.wuyi.jcsvorm.core.model.wrong.UserError6;
+import personal.wuyi.jcsvorm.core.model.wrong.UserError7;
+import personal.wuyi.jcsvorm.core.model.wrong.UserError8;
 
 /**
  * Test class for CsvFactory.
@@ -84,6 +93,43 @@ public class CsvFactoryExceptionTest {
 		} catch (IllegalArgumentException e) {
 			assertThat(e.getMessage(), is("For field name, must specify at least one parameter among pos and name in the CsvColumn annotation when the CSV file has a header line."));
 		}
+	}
+	
+	@Test
+	public void checkPosSequentialAndNoRepeatExceptionTest () throws IllegalAccessException, IOException {
+		// test negative pos value
+		List<UserError6> userList1 = new ArrayList<>();
+		userList1.add(new UserError6("Wang", 2000, Calendar.getInstance().getTime(), 23.45, true));
+		userList1.add(new UserError6("Sam", 3000, Calendar.getInstance().getTime(), 40.34, false));
+		userList1.add(new UserError6("Joe", 4000, Calendar.getInstance().getTime(), 33.98, true));
+		CsvFactory.writeCsv(userList1, "data/output_error.csv", HeaderOption.WITH_HEADER);
 		
+		// test duplicated pos value
+		List<UserError7> userList2 = new ArrayList<>();
+		userList2.add(new UserError7("Wang", 2000, Calendar.getInstance().getTime(), 23.45, true));
+		userList2.add(new UserError7("Sam", 3000, Calendar.getInstance().getTime(), 40.34, false));
+		userList2.add(new UserError7("Joe", 4000, Calendar.getInstance().getTime(), 33.98, true));
+		CsvFactory.writeCsv(userList2, "data/output_error.csv", HeaderOption.WITH_HEADER);
+		
+		// test not sequential pos values
+		List<UserError8> userList3 = new ArrayList<>();
+		userList3.add(new UserError8("Wang", 2000, Calendar.getInstance().getTime(), 23.45, true));
+		userList3.add(new UserError8("Sam", 3000, Calendar.getInstance().getTime(), 40.34, false));
+		userList3.add(new UserError8("Joe", 4000, Calendar.getInstance().getTime(), 33.98, true));
+		CsvFactory.writeCsv(userList3, "data/output_error.csv", HeaderOption.WITH_HEADER);
+	}
+	
+	@Test
+	public void getFieldFromFieldListByParameterExceptionTest() throws IllegalAccessException, IOException {
+		// test in the column list, provide a column is not existing in class
+		try {
+			List<User4> userList = new ArrayList<>();
+			userList.add(new User4("Wang", 2000, Calendar.getInstance().getTime(), 23.45, true));
+			userList.add(new User4("Sam", 3000, Calendar.getInstance().getTime(), 40.34, false));
+			userList.add(new User4("Joe", 4000, Calendar.getInstance().getTime(), 33.98, true));
+			CsvFactory.writeCsv(userList, "data/output2.csv", Arrays.asList("perf_balance", "int_aabbcc"), HeaderOption.WITH_HEADER);
+		} catch (NoSuchElementException e) {
+			assertThat(e.getMessage(), is("Can not find a field in the User4 class which the name parameter in the CsvColumn is int_aabbcc."));
+		}
 	}
 }
