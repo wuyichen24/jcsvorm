@@ -19,7 +19,6 @@ package personal.wuyi.jcsvorm.core.model.wrong;
 import java.util.Date;
 
 import personal.wuyi.jcsvorm.annotation.CsvColumn;
-import personal.wuyi.jcsvorm.annotation.CsvEntity;
 
 public class UserError3 {
 	@CsvColumn(name = "name")
