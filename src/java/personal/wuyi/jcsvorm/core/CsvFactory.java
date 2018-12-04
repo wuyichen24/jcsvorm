@@ -679,7 +679,7 @@ public class CsvFactory {
 		} else if (fieldType == LocalDateTime.class) { 
 			field.set(t, LocalDateTime.parse(value, DateTimeFormatter.ofPattern(column.format())));
 		} else {
-			throw new IllegalArgumentException("The field " + field.getName() + " is not an easy type (" + fieldType.getName() + ") for parsing CSV file");
+			throw new IllegalArgumentException("The field " + field.getName() + " is not an easy type (" + fieldType.getName() + ") for parsing CSV file.");
 		}
 	}
 	
@@ -745,7 +745,7 @@ public class CsvFactory {
 				return ((LocalDateTime) value).format(DateTimeFormatter.ofPattern(column.format()));
 			}
 		} else {
-			throw new IllegalArgumentException("The field " + field.getName() + " is not an easy type (" + fieldType.getName() + ") for writing CSV file");
+			throw new IllegalArgumentException("The field " + field.getName() + " is not an easy type (" + fieldType.getName() + ") for writing CSV file.");
 		}
 		
 		return null;
